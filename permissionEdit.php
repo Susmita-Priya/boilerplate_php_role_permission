@@ -19,10 +19,9 @@ if (isset($_POST['submit'])) {
     $query->execute();
 
     if ($query) {
-        echo "<script>alert('Permission updated successfully');</script>";
-        echo "<script>window.location.href = 'permissionList.php'</script>";
+        showSuccessToast("Permission updated successfully", "permissionList.php");
     } else {
-        echo "<script>alert('Something went wrong. Please try again');</script>";
+        showErrorToast("permissionList.php");
     }
 }
 
@@ -59,7 +58,7 @@ if (isset($_POST['submit'])) {
                                 </div>
                             </div>
 
-                            <button type="submit" name="submit" class="btn waves-effect waves-light btn-sm submitbtn">
+                            <button type="submit" name="submit" class="btn submitbtn btn-block btn-md mt-4">
                                 Update
                             </button>
                         </div>

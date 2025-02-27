@@ -20,8 +20,7 @@ if (isset($_POST['submit'])) {
         $query->execute();
     }
 
-    echo "<script>alert('Role added successfully');</script>";
-    echo "<script>window.location.href = 'roleList.php'</script>";
+    showSuccessToast("Role added successfully", "roleList.php");
 }
 
 
@@ -67,7 +66,7 @@ if (isset($_POST['submit'])) {
                                     $permissions = $query->fetchAll(PDO::FETCH_ASSOC);
 
                                     foreach ($permissions as $permission) {
-                                        echo "<div class='form-check'>";
+                                        echo "<div class='form-check checkbox checkbox-custom checkbox-circle'>";
                                         echo "<input class='form-check-input' type='checkbox' name='permissions[]' value='{$permission['permission_id']}' id='permission_{$permission['permission_id']}'>";
                                         echo "<label class='form-check-label' for='permission_{$permission['permission_id']}'>{$permission['permission_name']}</label>";
                                         echo "</div>";
@@ -76,7 +75,7 @@ if (isset($_POST['submit'])) {
                                 </div>
                             </div>
 
-                            <button type="submit" name="submit" class="btn waves-effect waves-light btn-sm submitbtn">
+                            <button type="submit" name="submit" class="btn submitbtn btn-block btn-md mt-3">
                                 Add
                             </button>
                         </div>

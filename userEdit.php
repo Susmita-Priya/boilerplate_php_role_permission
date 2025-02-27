@@ -39,10 +39,9 @@ if (isset($_POST['submit'])) {
     $query->execute();
 
     if ($query) {
-        echo "<script>alert('User updated successfully');</script>";
-        echo "<script>window.location.href = 'userList.php'</script>";
+        showSuccessToast("User updated successfully", "userList.php");
     } else {
-        echo "<script>alert('Something went wrong. Please try again');</script>";
+        showErrorToast("userList.php");
     }
 }
 ?>
@@ -72,35 +71,36 @@ if (isset($_POST['submit'])) {
                             <h1 class="d-flex justify-content-center mt-4">EDIT USER</h1>
 
                             <div class="form-row">
-                                <div class="form-group col-md-12">
+                                <div class="form-group col-md-6">
                                     <label for="first_name">First Name</label>
                                     <input type="text" name="firstName" class="form-control" id="firstName" value="<?php echo $user->firstName; ?>" required>
                                 </div>
-                            </div>
-
-                            <div class="form-row">
-                                <div class="form-group col-md-12">
+                            
+                                <div class="form-group col-md-6">
                                     <label for="last_name">Last Name</label>
                                     <input type="text" name="lastName" class="form-control" id="lastName" value="<?php echo $user->lastName; ?>" required>
                                 </div>
                             </div>
 
                             <div class="form-row">
-                                <div class="form-group col-md-12">
+                                <div class="form-group col-md-6">
                                     <label for="email">Email</label>
                                     <input type="email" name="email" class="form-control" id="email" value="<?php echo $user->email; ?>" required>
                                 </div>
-                            </div>
 
-                            <div class="form-row">
-                                <div class="form-group col-md-12">
+                                <div class="form-group col-md-6">
                                     <label for="phone">Phone</label>
                                     <input type="text" name="phone" class="form-control" id="phone" value="<?php echo $user->phone; ?>" required>
                                 </div>
                             </div>
-                            
+
                             <div class="form-row">
-                                <div class="form-group col-md-12">
+                                <div class="form-group col-md-6">
+                                    <label for="password">Password (leave blank to keep current password)</label>
+                                    <input type="password" name="password" class="form-control" id="password">
+                                </div>
+                         
+                                <div class="form-group col-md-6">
                                     <label for="role_id">Role</label>
                                     <select name="role_id" class="form-control" id="role_id" required>
                                         <?php
@@ -117,14 +117,7 @@ if (isset($_POST['submit'])) {
                                 </div>
                             </div>
 
-                            <div class="form-row">
-                                <div class="form-group col-md-12">
-                                    <label for="password">Password (leave blank to keep current password)</label>
-                                    <input type="password" name="password" class="form-control" id="password">
-                                </div>
-                            </div>
-
-                            <button type="submit" name="submit" class="btn waves-effect waves-light btn-sm submitbtn">
+                            <button type="submit" name="submit" class="btn submitbtn btn-block btn-md mt-4">
                                 Update
                             </button>
                         </div>

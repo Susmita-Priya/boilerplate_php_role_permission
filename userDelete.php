@@ -3,7 +3,7 @@ include 'config/db.php';
 
 $id = $_GET['id'];
 $sql = "delete from users where id =:id";
-$query = $conn->prepare($sql);
+$query = $pdo->prepare($sql);
 $query->bindParam(':id', $id, PDO::PARAM_STR);
 $query->execute();
 echo "<script>alert('User deleted');</script>";

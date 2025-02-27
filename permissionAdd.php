@@ -5,15 +5,14 @@ if (isset($_POST['submit'])) {
     $sql = "INSERT INTO permissions (permission_name) VALUES (:permission_name)";
     $query = $conn->prepare($sql);
     $query->bindParam(':permission_name', $permission_name, PDO::PARAM_STR);
-  $query->execute();
+    $query->execute();
 
-  if ($query) {
-    echo "<script>alert('Permission added successfully');</script>";
-    echo "<script>window.location.href = 'permissionList.php'</script>";
-} else {
-    // Registration failed
-    echo "<script>alert('Something went wrong. Please try again');</script>";
-}
+    if ($query) {
+        showSuccessToast("Permission added successfully", "permissionList.php");
+    }
+     else {
+        showErrorToast("permissionList.php");
+    }
 }
 
 ?>
@@ -48,8 +47,8 @@ if (isset($_POST['submit'])) {
                                 </div>
                             </div>
 
-                            <button type="submit" name="submit" class="btn waves-effect waves-light btn-sm submitbtn">
-                                Add
+                            <button type="submit" name="submit" class="btn submitbtn btn-block btn-md mt-4">
+                                Add Permission
                             </button>
                         </div>
                     </div>
@@ -58,5 +57,6 @@ if (isset($_POST['submit'])) {
         </div>
     </div>
 </div>
+
 
 <?php include "includes/foot.php"; ?>

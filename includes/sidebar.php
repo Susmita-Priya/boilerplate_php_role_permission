@@ -31,7 +31,7 @@
                                     class="menu-arrow"></span></a>
                             <ul class="nav-second-level " aria-expanded="false">
                             <!-- @can('product-list') -->
-                                <!-- <li><a href="{{ route('products.index') }}">Product List</a></li> -->
+                                <li><a href="productList.php">Product List</a></li>
                             <!-- @endcan -->
                         </ul>
                     </li>

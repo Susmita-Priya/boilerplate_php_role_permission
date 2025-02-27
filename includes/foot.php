@@ -41,6 +41,18 @@
 <script src="resources/admin_dashboard/assets/js/jquery.core.js"></script>
 <script src="resources/admin_dashboard/assets/js/jquery.app.js"></script>
 
+<!-- Toastr js -->
+<script src="resources/admin_dashboard/plugins/jquery-toastr/jquery.toast.min.js"></script>
+<script src="resources/admin_dashboard/assets/pages/jquery.toastr.js" type="text/javascript"></script>
+
+<!-- Jquery filer js -->
+<script src="resources/admin_dashboard/plugins/jquery.filer/js/jquery.filer.min.js"></script>
+
+<!-- Bootstrap fileupload js -->
+<script src="resources/admin_dashboard/plugins/bootstrap-fileupload/bootstrap-fileupload.js"></script>
+<!-- page specific js -->
+<script src="resources/admin_dashboard/assets/pages/jquery.fileuploads.init.js"></script>
+
 <!-- @stack('js') -->
 
 <!-- custom js -->

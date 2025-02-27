@@ -52,11 +52,24 @@
 
     <script src="resources/admin_dashboard/assets/js/modernizr.min.js"></script>
 
+    <!-- Toastr css -->
+    <link href="resources/admin_dashboard/plugins/jquery-toastr/jquery.toast.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+     <!-- Jquery filer css -->
+     <link href="resources/admin_dashboard/plugins/jquery.filer/css/jquery.filer.css" rel="stylesheet" />
+    <link href="resources/admin_dashboard/plugins/jquery.filer/css/themes/jquery.filer-dragdropbox-theme.css" rel="stylesheet" />
+
+    <!-- Bootstrap fileupload css -->
+    <link href="resources/admin_dashboard/plugins/bootstrap-fileupload/bootstrap-fileupload.css" rel="stylesheet" />
+
+
 </head>
 
 <body>
     <!-- Begin page -->
     <div id="wrapper">
+        <?php include("includes/toster.php"); ?>
 
         <?php include("includes/topbar.php"); ?>
 
