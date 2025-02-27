@@ -59,10 +59,10 @@
                                 <!-- View Role -->
                                 <td>
                                     <div class="text-center">
-                                        <a href="#" class="rounded btn btn-info btn-sm" data-toggle="modal" data-target="#viewUser<?php echo ($role->id); ?>" title="View"><i class="mdi mdi-eye"></i></a>
+                                        <a href="#" class="rounded btn btn-info btn-sm" data-toggle="modal" data-target="#viewUser<?php echo ($role->role_id); ?>" title="View"><i class="mdi mdi-eye"></i></a>
                                     </div>
 
-                                    <div class="modal fade" id="viewUser<?php echo ($role->id); ?>">
+                                    <div class="modal fade" id="viewUser<?php echo ($role->role_id); ?>">
                                         <div class="modal-dialog modal-md">
                                             <div class="modal-content">
                                                 <div class="modal-header">
@@ -71,6 +71,19 @@
                                                 </div>
                                                 <div class="modal-body"> 
                                                     <p><strong>Role Name:</strong> <?php echo htmlentities($role->role_name); ?></p>
+                                                    <p><strong>Permissions:</strong> 
+                                                        <?php
+                                                        $sql = "SELECT p.permission_name FROM role_permissions rp JOIN permissions p ON rp.permission_id = p.permission_id WHERE rp.role_id = :role_id";
+                                                        $query = $conn->prepare($sql);
+                                                        $query->bindParam('role_id', $role->role_id);
+                                                        $query->execute();
+                                                        $permissions = $query->fetchAll(PDO::FETCH_ASSOC);
+
+                                                        foreach ($permissions as $permission) {
+                                                            echo '<li>' . $permission['permission_name'] . '</li>';
+                                                        }
+                                                        ?>
+                                                    </p>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -90,14 +103,14 @@
                                      
                                     <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                                     <a class="dropdown-item"
-                                        href="roleEdit.php?id=<?php echo $role->id; ?>"><i
+                                        href="roleEdit.php?role_id=<?php echo $role->role_id; ?>"><i
                                             class="mdi mdi-pencil m-r-10 text-muted font-18 vertical-middle"></i>Edit
                                         Role
                                     </a><?php if (check_permission('role_edit')) { ?>
                                     <?php } ?>
 
                                     
-                                    <a class="dropdown-item" href="roleDelete.php?id=<?php echo $role->id; ?>"
+                                    <a class="dropdown-item" href="roleDelete.php?role_id=<?php echo $role->role_id; ?>"
                                         onclick="return confirm('Are you sure?')"><i
                                             class="mdi mdi-delete m-r-10 text-muted font-18 vertical-middle"></i>
                                         Delete Role

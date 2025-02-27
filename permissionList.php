@@ -40,7 +40,6 @@
                     <tr>
                         <th class="text-center">No.</th>
                         <th>Permission Name</th>
-                        <th>Permission No</th>
                         <th class="text-center" style="width: 20%;">View</th>
                         <th class="text-center" style="width: 20%;">Action</th>
                     </tr>
@@ -57,7 +56,7 @@
                             <tr>
                                 <td class="text-center"><?php echo htmlentities($cnt); ?></td>
                                 <td><?php echo htmlentities($permission->permission_name); ?></td>
-                                <td><?php echo htmlentities($permission->permission_id); ?></td>
+                                
                                 <!-- View Permission -->
                                 <td>
                                     <div class="text-center">

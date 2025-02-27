@@ -6,15 +6,15 @@ if (isset($_POST['submit'])) {
 
     // Insert role
     $sql = "INSERT INTO roles (role_name) VALUES (:role_name)";
-    $query = $pdo->prepare($sql);
+    $query = $conn->prepare($sql);
     $query->bindParam(':role_name', $role_name, PDO::PARAM_STR);
     $query->execute();
-    $role_id = $pdo->lastInsertId();
+    $role_id = $conn->lastInsertId();
 
     // Insert permissions for the role
     foreach ($permissions as $permission_id) {
         $sql = "INSERT INTO role_permissions (role_id, permission_id) VALUES (:role_id, :permission_id)";
-        $query = $pdo->prepare($sql);
+        $query = $conn->prepare($sql);
         $query->bindParam(':role_id', $role_id, PDO::PARAM_STR);
         $query->bindParam(':permission_id', $permission_id, PDO::PARAM_STR);
         $query->execute();
@@ -52,53 +52,28 @@ if (isset($_POST['submit'])) {
 
                             <div class="form-row">
                                 <div class="form-group col-md-12">
-                                    <label for="first_name">First Name</label>
-                                    <input type="text" name="firstName" class="form-control" id="firstName" required>
+                                    <label for="role_name">Role Name</label>
+                                    <input type="text" name="role_name" class="form-control" id="role_name" required>
                                 </div>
                             </div>
 
                             <div class="form-row">
                                 <div class="form-group col-md-12">
-                                    <label for="last_name">Last Name</label>
-                                    <input type="text" name="lastName" class="form-control" id="lastName" required>
-                                </div>
-                            </div>
+                                    <label for="permissions">Permissions</label>
+                                    <?php
+                                    $sql = "SELECT * FROM permissions";
+                                    $query = $conn->prepare($sql);
+                                    $query->execute();
+                                    $permissions = $query->fetchAll(PDO::FETCH_ASSOC);
 
-                            <div class="form-row">
-                                <div class="form-group col-md-12">
-                                    <label for="email">Email</label>
-                                    <input type="email" name="email" class="form-control" id="email" required>
+                                    foreach ($permissions as $permission) {
+                                        echo "<div class='form-check'>";
+                                        echo "<input class='form-check-input' type='checkbox' name='permissions[]' value='{$permission['permission_id']}' id='permission_{$permission['permission_id']}'>";
+                                        echo "<label class='form-check-label' for='permission_{$permission['permission_id']}'>{$permission['permission_name']}</label>";
+                                        echo "</div>";
+                                    }
+                                    ?>
                                 </div>
-                            </div>
-
-                            <div class="form-row">
-                                <div class="form-group col-md-12">
-                                    <label for="phone">Phone</label>
-                                    <input type="text" name="phone" class="form-control" id="phone" required>
-                                </div>
-                            </div>
-                            
-                            <div class="form-row">
-                                <div class="form-group col-md-12">
-                                    <label for="role_id">Role</label>
-                                    <select name="role_id" class="form-control" id="role_id" required>
-                                        <?php
-                                        $role_sql = "SELECT * FROM roles";
-                                        $role_query = $conn->prepare($role_sql);
-                                        $role_query->execute();
-                                        $roles = $role_query->fetchAll(PDO::FETCH_OBJ);
-                                        foreach ($roles as $role) {
-                                            echo "<option value='$role->role_id'>$role->role_name</option>";
-                                        }
-                                        ?>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="form-row">
-                                <div class="form-group col-md-12">
-                                <label for="password">Password</label>
-                                <input type="password" name="password" class="form-control" id="password" required>
                             </div>
 
                             <button type="submit" name="submit" class="btn waves-effect waves-light btn-sm submitbtn">
