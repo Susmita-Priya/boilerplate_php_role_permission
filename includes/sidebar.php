@@ -47,8 +47,9 @@
                                     <li><a href="userList.php">User Management</a></li>
                                 <!-- @endcan
                                 @can('role-list') -->
-                                    <li><a href="">Role Management</a></li>
+                                    <li><a href="roleList.php">Role Management</a></li>
                                 <!-- @endcan -->
+                                    <li><a href="permissionList.php">Permission Management</a></li>
                             </ul>
                         </li>
 

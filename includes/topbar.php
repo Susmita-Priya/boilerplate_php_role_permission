@@ -6,8 +6,8 @@
 
         <a href="index.php" class="logo">
             <span>
-                <img src="resources/images/logo.svg" style="width:120px" alt="" height="28">
-                <p style="color: rgb(100, 197, 177);"> Demo </p>
+                <img src="resources/images/logo-light.svg"  alt="" height="32">
+                <!-- <p style="color: rgb(100, 197, 177);"> Demo </p> -->
             </span>
         </a>
     </div>

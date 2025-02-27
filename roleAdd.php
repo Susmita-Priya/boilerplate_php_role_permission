@@ -1,60 +1,39 @@
 <?php include "includes/head.php"; 
 
-if (isset($_GET['id'])) {
-    $user_id = $_GET['id'];
-    $sql = "SELECT * FROM users WHERE id = :id";
-    $query = $conn->prepare($sql);
-    $query->bindParam(':id', $user_id, PDO::PARAM_INT);
-    $query->execute();
-    $user = $query->fetch(PDO::FETCH_OBJ);
-}
-
 if (isset($_POST['submit'])) {
-    $first_name = $_POST['firstName'];
-    $last_name = $_POST['lastName'];
-    $email = $_POST['email'];
-    $phone = $_POST['phone'];
-    $role_id = $_POST['role_id'];
-    $password = $_POST['password']; 
+    $role_name = $_POST['role_name'];
+    $permissions = $_POST['permissions'] ?? [];
 
-    if (!empty($password)) {
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-        $sql = "UPDATE users SET firstName = :firstName, lastName = :lastName, email = :email, phone = :phone, password = :password, role_id = :role_id WHERE id = :id";
-    } else {
-        $sql = "UPDATE users SET firstName = :firstName, lastName = :lastName, email = :email, phone = :phone, role_id = :role_id WHERE id = :id";
-    }
-
-    $query = $conn->prepare($sql);
-    $query->bindParam(':firstName', $first_name, PDO::PARAM_STR);
-    $query->bindParam(':lastName', $last_name, PDO::PARAM_STR);
-    $query->bindParam(':email', $email, PDO::PARAM_STR);
-    $query->bindParam(':phone', $phone, PDO::PARAM_STR);
-    $query->bindParam(':role_id', $role_id, PDO::PARAM_INT);
-    $query->bindParam(':id', $user_id, PDO::PARAM_INT);
-
-    if (!empty($password)) {
-        $query->bindParam(':password', $hashed_password, PDO::PARAM_STR);
-    }
-
+    // Insert role
+    $sql = "INSERT INTO roles (role_name) VALUES (:role_name)";
+    $query = $pdo->prepare($sql);
+    $query->bindParam(':role_name', $role_name, PDO::PARAM_STR);
     $query->execute();
+    $role_id = $pdo->lastInsertId();
 
-    if ($query) {
-        echo "<script>alert('User updated successfully');</script>";
-        echo "<script>window.location.href = 'userList.php'</script>";
-    } else {
-        echo "<script>alert('Something went wrong. Please try again');</script>";
+    // Insert permissions for the role
+    foreach ($permissions as $permission_id) {
+        $sql = "INSERT INTO role_permissions (role_id, permission_id) VALUES (:role_id, :permission_id)";
+        $query = $pdo->prepare($sql);
+        $query->bindParam(':role_id', $role_id, PDO::PARAM_STR);
+        $query->bindParam(':permission_id', $permission_id, PDO::PARAM_STR);
+        $query->execute();
     }
-}
-?>
 
+    echo "<script>alert('Role added successfully');</script>";
+    echo "<script>window.location.href = 'roleList.php'</script>";
+}
+
+
+?>
 <!-- Breadcrumb -->
 <div class="row">
     <div class="col-12">
         <div class="page-title-box">
-            <h4 class="page-title float-left">Edit user</h4>
+            <h4 class="page-title float-left">Add role</h4>
             <ol class="breadcrumb float-right">
                 <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
-                <li class="breadcrumb-item active">Edit user</li>
+                <li class="breadcrumb-item active">Add role</li>
             </ol>
             <div class="clearfix"></div>
         </div>
@@ -69,33 +48,33 @@ if (isset($_POST['submit'])) {
                 <div class="container mt-5">
                     <div class="col-md-12">
                         <div class="card-box">
-                            <h1 class="d-flex justify-content-center mt-4">EDIT USER</h1>
+                            <h1 class="d-flex justify-content-center mt-4">ADD ROLE</h1>
 
                             <div class="form-row">
                                 <div class="form-group col-md-12">
                                     <label for="first_name">First Name</label>
-                                    <input type="text" name="firstName" class="form-control" id="firstName" value="<?php echo $user->firstName; ?>" required>
+                                    <input type="text" name="firstName" class="form-control" id="firstName" required>
                                 </div>
                             </div>
 
                             <div class="form-row">
                                 <div class="form-group col-md-12">
                                     <label for="last_name">Last Name</label>
-                                    <input type="text" name="lastName" class="form-control" id="lastName" value="<?php echo $user->lastName; ?>" required>
+                                    <input type="text" name="lastName" class="form-control" id="lastName" required>
                                 </div>
                             </div>
 
                             <div class="form-row">
                                 <div class="form-group col-md-12">
                                     <label for="email">Email</label>
-                                    <input type="email" name="email" class="form-control" id="email" value="<?php echo $user->email; ?>" required>
+                                    <input type="email" name="email" class="form-control" id="email" required>
                                 </div>
                             </div>
 
                             <div class="form-row">
                                 <div class="form-group col-md-12">
                                     <label for="phone">Phone</label>
-                                    <input type="text" name="phone" class="form-control" id="phone" value="<?php echo $user->phone; ?>" required>
+                                    <input type="text" name="phone" class="form-control" id="phone" required>
                                 </div>
                             </div>
                             
@@ -109,8 +88,7 @@ if (isset($_POST['submit'])) {
                                         $role_query->execute();
                                         $roles = $role_query->fetchAll(PDO::FETCH_OBJ);
                                         foreach ($roles as $role) {
-                                            $selected = ($role->role_id == $user->role_id) ? 'selected' : '';
-                                            echo "<option value='$role->role_id' $selected>$role->role_name</option>";
+                                            echo "<option value='$role->role_id'>$role->role_name</option>";
                                         }
                                         ?>
                                     </select>
@@ -119,13 +97,12 @@ if (isset($_POST['submit'])) {
 
                             <div class="form-row">
                                 <div class="form-group col-md-12">
-                                    <label for="password">Password (leave blank to keep current password)</label>
-                                    <input type="password" name="password" class="form-control" id="password">
-                                </div>
+                                <label for="password">Password</label>
+                                <input type="password" name="password" class="form-control" id="password" required>
                             </div>
 
                             <button type="submit" name="submit" class="btn waves-effect waves-light btn-sm submitbtn">
-                                Update
+                                Add
                             </button>
                         </div>
                     </div>
