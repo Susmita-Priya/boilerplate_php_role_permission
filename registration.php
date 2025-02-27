@@ -77,7 +77,9 @@ if (isset($_POST['submit'])) {
     </style>
 </head>
 
-<body style="background-color:rgb(100,197,177)">
+<!-- <body style="background-color:rgb(100,197,177)"> -->
+<body style=" background-image: url('resources/images/bg.jpg'); background-size: cover; background-repeat: no-repeat;">
+
     <section>
         <div class="container">
             <div class="row">
