@@ -1,3 +1,8 @@
+<?php
+if (!isset($_SESSION['name'])) {
+    $_SESSION['name'] = 'Guest'; // Default name if not set
+}
+?>
 <!-- Top Bar Start -->
 <div class="topbar">
 
@@ -63,6 +68,7 @@
                 <div class="dropdown-menu dropdown-menu-right profile-dropdown " aria-labelledby="Preview">
                     <!-- item-->
                     <div class="dropdown-item noti-title">
+                        <h5 class="text-overflow"><small>Hello, <?php echo $_SESSION['name']; ?></small> </h5>
                         <!-- @if (Auth::check() && Auth::user()->name)
                             <h5 class="text-overflow"><small>Welcome {{ Auth::user()->name }}</small></h5>
                         @else
@@ -114,7 +120,7 @@
                         @csrf
                     </form> -->
 
-                    <a href="#" class="dropdown-item notify-item" id="logoutBtn">
+                    <a href="logout.php" class="dropdown-item notify-item" id="logoutBtn">
                         <i class="mdi mdi-power"></i> <span>Logout</span>
                     </a>
 

@@ -61,7 +61,7 @@
                                 <td><?php echo htmlentities($product->product_name); ?></td>
                                 <td><?php echo htmlentities($product->product_detail); ?></td>
                                 <td><?php echo htmlentities($product->product_price); ?> TK</td>
-                                <td><img src="resources/uploads/<?php echo htmlentities($product->product_image); ?>" alt="product image" width="300" ></td>
+                                <td><img src="resources/uploads/<?php echo htmlentities($product->product_image); ?>" alt="product image" width="100" ></td>
 
                                 <!-- View Product -->
                                 <td>
@@ -80,7 +80,7 @@
                                                     <p><strong>Product Name:</strong> <?php echo htmlentities($product->product_name); ?></p>
                                                     <p><strong>Product Detail:</strong> <?php echo htmlentities($product->product_detail); ?></p>
                                                     <p><strong>Product Price:</strong> <?php echo htmlentities($product->product_price); ?> TK</p>
-                                                    <img src="resources/uploads/<?php echo htmlentities($product->product_image); ?>" alt="product image" width="300%" height="300%">
+                                                    <img src="resources/uploads/<?php echo htmlentities($product->product_image); ?>" alt="product image" width="100" height="100">
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
